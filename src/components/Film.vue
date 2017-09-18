@@ -159,6 +159,11 @@ export default {
 		var sessions= JSON.parse(localStorage.sessions);
 		var film 	= this.findGetParameter('film');
 
+		document.getElementsByClassName('film')[0].removeAttribute('style');
+		setTimeout(function () {
+			document.getElementsByClassName('film')[0].setAttribute('style', 'opacity: 1');
+		}, 300)
+
 		if (film) {
 			for (var i = 0; i < movies.length; i++) {
 				if (movies[i].key == film.replace(' ', '+')) {

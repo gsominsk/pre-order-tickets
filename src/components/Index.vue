@@ -11,13 +11,11 @@
 				</ul>
 			</div>
 		</div>
-		<div class="footer" v-if="admin == 1">
-			<router-link v-bind:to="'/AddFilm'">
-				<div class="add-film-btn">
-					add film
-				</div>
-			</router-link>
-		</div>
+		<router-link v-bind:to="'/AddFilm'" v-if="admin == 1" class="footer">
+			<div class="add-film-btn">
+				add film
+			</div>
+		</router-link>
 	</div>
 </template>
 
@@ -57,6 +55,9 @@
 				} else
 					for (var i = 0; i < movies.length; i++)
 						this.films.push(movies[i]);
+				setTimeout(() => {
+					this.showFilms();
+				}, 300);
 			},
 			searchFilm (name) {
 				if (!localStorage.films) return;
@@ -67,8 +68,20 @@
 				if (name) {
 					for (var i = 0; i < movies.length; i++)
 						movies[i].title == name ? this.films.push(movies[i]) : 0;
+					setTimeout(() => {
+						this.showFilms();
+					}, 300);
 				} else {
 					this.checkGenre();
+				}
+			},
+			showFilms () {
+				var bb = document.getElementsByClassName('fl-item');
+
+				if (bb.length == 0) return ;
+
+				for (var i = 0; i < bb.length; i++) {
+					bb[i].setAttribute('style', 'opacity: 1');
 				}
 			},
 			changeRoot () {
@@ -80,10 +93,16 @@
 			this.checkGenre();
 		},
 		mounted () {
+			document.getElementsByClassName('films-list')[0].removeAttribute('style');
+			setTimeout(function () {
+				document.getElementsByClassName('films-list')[0].setAttribute('style', 'opacity: 1');
+			}, 300)
 		},
 		beforeRouteUpdate (to, from, next) {
 			next();
 			this.checkGenre();
+		},
+		beforeDestroy () {
 		},
 		watch : {
 			item: function () {
