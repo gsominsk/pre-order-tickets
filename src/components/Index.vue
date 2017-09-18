@@ -1,13 +1,17 @@
-<template>
+	<template>
 	<div id="about">
 		<div class="row films">
+			<div class="admin" v-on:click="changeRoot">
+				<i v-if="admin == 1" class="fa fa-unlock" aria-hidden="true"></i>
+				<i v-else class="fa fa-lock" aria-hidden="true"></i>
+			</div>
 			<div class="col-xs-12 col-md-12">
 				<ul class="films-list">
 					<index-film-item v-for="(film, index) in films" v-bind:item="film" v-bind:key="index"></index-film-item>
 				</ul>
 			</div>
 		</div>
-		<div class="footer">
+		<div class="footer" v-if="admin == 1">
 			<router-link v-bind:to="'/AddFilm'">
 				<div class="add-film-btn">
 					add film
@@ -18,13 +22,13 @@
 </template>
 
 <script>
-	import db 			from '../assets/js/db-imitation'
 
   	export default {
 		props: ['item'],
 		data () {
 			return ({
-				films: []
+				films: [],
+				admin: localStorage.admin
 			})
 		},
 		methods: {
@@ -41,27 +45,42 @@
 				return result;
 			},
 			checkGenre () {
+				if (!localStorage.films) return;
+				var movies = JSON.parse(localStorage.films);
+
 				if (this.findGetParameter('genre')) {
 					var genre = this.findGetParameter('genre');
-					this.films = [];
-					for (var i = 0; i < db.films.length; i++)
-						db.films[i].info.genre == genre ? this.films.push(db.films[i].info) : 0;
+					this.films = []
+					for (var i = 0; i < movies.length; i++) {
+						movies[i].genre == genre ? this.films.push(movies[i]) : 0;
+					}
 				} else
-					for (var i = 0; i < db.films.length; i++)
-						this.films.push(db.films[i].info);
+					for (var i = 0; i < movies.length; i++)
+						this.films.push(movies[i]);
 			},
 			searchFilm (name) {
+				if (!localStorage.films) return;
 				this.films = [];
+				var movies = JSON.parse(localStorage.films);
+
+				if (movies.length == 0) return ;
 				if (name) {
-					for (var i = 0; i < db.films.length; i++)
-						db.films[i].info.title == name ? this.films.push(db.films[i].info) : 0;
+					for (var i = 0; i < movies.length; i++)
+						movies[i].title == name ? this.films.push(movies[i]) : 0;
 				} else {
 					this.checkGenre();
 				}
+			},
+			changeRoot () {
+				console.log('hello');
+				localStorage.admin = localStorage.admin == 1 ? 0 : 1;
+				this.admin = this.admin == 1 ? 0 : 1;
 			}
 		},
 		created () {
 			this.checkGenre();
+		},
+		mounted () {
 		},
 		beforeRouteUpdate (to, from, next) {
 			next();

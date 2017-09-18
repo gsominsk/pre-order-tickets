@@ -2,27 +2,62 @@
 	<div class="row add-new-film-wrap">
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<div class="add-new-film">
-				<form name="addNewFilmForm" v-on:submit.prevent="saveFilm">
-					<input type="text" name="title" v-model="film.title" placeholder="title of movie...">
-					<select v-model="film.genre">
+				<form name="addNewFilmForm" v-on:submit.prevent="saveFilm" required>
+					<input type="text" name="title" v-model="film.title" placeholder="title of movie..." required>
+					<select v-model="film.genre" required>
 						<option value="comedy">Comedy</option>
 						<option value="action">Action</option>
 						<option value="adventure">Adventure</option>
 						<option value="crime">Crime</option>
 						<option value="drama">Drama</option>
 					</select>
-					<input type="text" name="start-time" class="timepicker" v-model="film.startTime" placeholder="Start time..." v-on:click="showTime">
 					<div class="range-slider">
-						<input name="maxFamous" type="range" value="0" min="0" max="500" class="range-slider__range" v-model="film.duration" v-on:change="setValue()"/><span class="range-slider__value">{{film.duration}} m.</span>
+						<input name="maxFamous"
+							   type="range"
+							   value="0"
+							   min="0"
+							   max="500"
+							   class="range-slider__range"
+							   v-model="film.duration"
+							   v-on:change="setValue()"/>
+						<span class="range-slider__value">{{film.duration}} m.</span>
 					</div>
-					<input type="text" name="date-of-release" id="datepicker" v-model="film.dateOfRelease" placeholder="Date of release..." v-on:click="showDate">
-					<input type="text" class="price" name="ticket-price" v-model="film.ticketPrice" placeholder="Ticket price...">
 					<div class="upload-file-block">
-						<input class="box__file" v-on:change="checkFiles" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
+						<input class="box__file"
+							   type="file" name="files[]"
+							   id="file"
+							   data-multiple-caption="{count} files selected"
+							   v-on:change="checkFiles"
+							   multiple />
 						<div class="files-names">
 							<span v-for="file in fileNames">{{file}}</span>
 						</div>
 					</div>
+
+					<input type="text"
+						   name="startTime"
+						   class="timepicker"
+						   v-model="film.startTime"
+						   onkeypress="return false"
+						   autocomplete="off"
+						   placeholder="Start time..."
+						   v-on:click="showTime"
+						   required>
+					<input type="text"
+						   name="dateOfRelease"
+						   id="datepicker"
+						   autocomplete="off"
+						   onkeypress="return false"
+						   placeholder="Date of release..."
+						   v-model="film.dateOfRelease"
+						   v-on:click="showDate"
+						   required>
+					<input type="text"
+						   class="price"
+						   name="ticketPrice"
+						   placeholder="Ticket price..."
+						   v-model="film.ticketPrice"
+						   required>
 
 					<textarea name="description" rows="5" v-model="film.description"></textarea>
 					<button class="add-film-btn">
@@ -39,16 +74,36 @@
 		data: function () {
 			return ( {
 				film: {
-					duration: 0
+					duration: 0,
+					photo: []
 				},
-				fileNames: ['Drug fil e or clik to upload.'],
-				photo: []
+				fileNames: ['Drug file or clik to upload.'],
 			})
 		},
 		methods: {
 			saveFilm: function () {
-				console.log(document.addNewFilmForm);
-				console.log(this.film, this.photo);
+				!this.film.startTime ? this.film.startTime = document.addNewFilmForm.startTime.value : 0;
+				!this.film.dateOfRelease ? this.film.dateOfRelease = document.addNewFilmForm.dateOfRelease.value : 0;
+				!this.film.ticketPrice ? this.film.ticketPrice = document.addNewFilmForm.ticketPrice.value : 0;
+
+				this.film.key = window.btoa( unescape(encodeURIComponent(this.film.title + new Date)) );
+				console.log(this.film.key);
+
+				if (localStorage.films) {
+					var movies = JSON.parse(localStorage.films);
+					var sessions = JSON.parse(localStorage.sessions)
+					movies[movies.length] = this.film;
+					sessions[this.film.key] = [];
+					localStorage.films = JSON.stringify(movies);
+					localStorage.sessions = JSON.stringify(sessions);
+				} else {
+					localStorage.films 		= JSON.stringify([this.film]);
+					var sessions = {};
+					sessions[this.film.key] = [];
+					localStorage.sessions 	= JSON.stringify(sessions);
+				}
+
+				console.log(this.film);
 			},
 			setValue: function () {
 				console.log('eee');
@@ -73,8 +128,10 @@
 					} else if (files[file]) {
 						reader.readAsDataURL(files[file]); //reads the data as a URL
 						reader.onloadend = () => {
-							_this.photo[file] = {};
-							_this.photo[file].src = reader.result;
+							_this.film.photo[file] = {
+								src: reader.result,
+								name: files[file].name
+							};
 							_this.fileNames.push(files[file].name);
 							++file < files.length ? addFiles(_this) : 0;
 						}

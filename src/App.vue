@@ -24,7 +24,6 @@
 </template>
 
 <script>
-	import db 			from './assets/js/db-imitation'
 	import Index 			from './components/Index'
 
 
@@ -54,6 +53,9 @@ export default {
 		'filmName': function (val, oldVal) {
 
 		}
+	},
+	created () {
+//		if (!localStorage.admin) localStorage.admin = 0;
 	}
 
 

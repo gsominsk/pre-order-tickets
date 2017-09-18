@@ -1,8 +1,11 @@
+html, body, .container {
+  height: 100%; }
+
 .container {
   max-width: 960px;
   position: unset; }
 
-.normalize-list, .header-menu .genre-list, .films .films-list, .film .film-descr-wrap .film-descr .film-descr-list {
+.normalize-list, .header-menu .genre-list, .films .films-list, .film .film-descr-wrap .film-descr .film-descr-list, .film .cinema-places-wrap .places-wrap .places-map .places-row {
   padding: 0;
   margin: 0;
   list-style: none; }
@@ -17,27 +20,40 @@
     left: 0;
     top: 0;
     height: 70px;
-    width: 100%; }
+    width: 100%;
+    background: lightgrey; }
   .header-menu .genre-list {
     display: flex;
     flex-direction: row;
     justify-content: space-between; }
     .header-menu .genre-list .gl-item {
-      position: absolute; }
+      cursor: pointer; }
       .header-menu .genre-list .gl-item a {
         color: #000;
         text-decoration: none; }
-  .header-menu .search-wrap input {
-    float: right;
-    width: 75%; }
+      .header-menu .genre-list .gl-item:hover {
+        border-bottom: 5px solid limegreen;
+        transition: 0.2s; }
+  .header-menu .search-wrap {
+    position: relative; }
+    .header-menu .search-wrap input {
+      float: right;
+      width: 75%;
+      padding-right: 20px;
+      transition: 0.3s;
+      outline: none; }
+    .header-menu .search-wrap i {
+      position: absolute;
+      top: 6px;
+      right: 5px; }
 
 .films .films-list {
   display: flex;
   flex-direction: row;
   padding: 25px 0; }
   .films .films-list .fl-item {
+    height: 250px;
     width: 25%;
-    height: 270px;
     padding: 5px;
     overflow: hidden; }
     .films .films-list .fl-item .film-img-wrap {
@@ -57,11 +73,11 @@
 .film {
   max-width: 600px;
   margin: 0 auto;
-  padding: 50px 0; }
+  padding: 25px 0; }
   .film .film-descr-wrap {
     padding-bottom: 50px; }
     .film .film-descr-wrap .film-img-wrap {
-      height: 270px;
+      height: 350px;
       background-image: url("../images/empty.png");
       background-position: 50% 50%;
       background-repeat: no-repeat;
@@ -80,14 +96,194 @@
           .film .film-descr-wrap .film-descr .film-descr-list .fdl-item:last-child span:first-child {
             display: block; }
   .film .cinema-places-wrap {
-    height: 400px; }
+    margin-bottom: 60px;
+    overflow: hidden; }
+    .film .cinema-places-wrap .buy-ticket-info {
+      text-align: left;
+      font-size: 30px;
+      font-weight: 700; }
+    .film .cinema-places-wrap .btn-pre-order {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 40px;
+      border-radius: 5px; }
+      .film .cinema-places-wrap .btn-pre-order span {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background: limegreen;
+        cursor: pointer;
+        color: #fff; }
+        .film .cinema-places-wrap .btn-pre-order span:active {
+          background: green; }
     .film .cinema-places-wrap .places-wrap {
-      height: 100%; }
+      padding-top: 20px;
+      overflow-x: auto; }
       .film .cinema-places-wrap .places-wrap .places-map {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: inherit; }
+        flex-direction: column;
+        width: fit-content;
+        height: inherit;
+        margin: 0 auto; }
+        .film .cinema-places-wrap .places-wrap .places-map .places-row {
+          display: flex; }
+          .film .cinema-places-wrap .places-wrap .places-map .places-row .pr-item {
+            padding: 10px 20px;
+            border: 1px solid black;
+            border-radius: 25%;
+            margin: 2px;
+            cursor: pointer; }
+            .film .cinema-places-wrap .places-wrap .places-map .places-row .pr-item:hover {
+              background: limegreen; }
+            .film .cinema-places-wrap .places-wrap .places-map .places-row .pr-item:first-child {
+              border: none; }
+              .film .cinema-places-wrap .places-wrap .places-map .places-row .pr-item:first-child:hover {
+                cursor: default;
+                background: transparent; }
+          .film .cinema-places-wrap .places-wrap .places-map .places-row .ordered {
+            background: lightgrey !important; }
+
+.add-new-film-wrap {
+  max-width: 350px;
+  margin: 0 auto;
+  padding: 25px 0 50px; }
+  .add-new-film-wrap .range-slider {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%; }
+    .add-new-film-wrap .range-slider input {
+      margin: 0 !important; }
+  .add-new-film-wrap .range-slider__range {
+    -webkit-appearance: none;
+    width: calc(100% - (73px));
+    height: 10px;
+    border-radius: 5px;
+    background: #d7dcdf;
+    outline: none;
+    padding: 0;
+    margin: 0; }
+  .add-new-film-wrap .range-slider__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #2c3e50;
+    cursor: pointer;
+    -webkit-transition: background .15s ease-in-out;
+    transition: background .15s ease-in-out; }
+  .add-new-film-wrap .range-slider__range::-webkit-slider-thumb:hover {
+    background: #1abc9c; }
+  .add-new-film-wrap .range-slider__range:active::-webkit-slider-thumb {
+    background: #1abc9c; }
+  .add-new-film-wrap .range-slider__range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 50%;
+    background: #2c3e50;
+    cursor: pointer;
+    -webkit-transition: background .15s ease-in-out;
+    transition: background .15s ease-in-out; }
+  .add-new-film-wrap .range-slider__range::-moz-range-thumb:hover {
+    background: #1abc9c; }
+  .add-new-film-wrap .range-slider__range:active::-moz-range-thumb {
+    background: #1abc9c; }
+  .add-new-film-wrap .range-slider__value {
+    display: inline-block;
+    position: relative;
+    width: 90px;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: #2c3e50;
+    padding: 5px 10px;
+    margin-left: 8px; }
+  .add-new-film-wrap .range-slider__value:after {
+    display: none;
+    position: absolute;
+    top: 8px;
+    left: -7px;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-right: 7px solid #2c3e50;
+    border-bottom: 7px solid transparent;
+    content: ''; }
+  .add-new-film-wrap ::-moz-range-track {
+    background: #d7dcdf;
+    border: 0; }
+  .add-new-film-wrap .add-new-film .upload-file-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100px;
+    margin-bottom: 10px;
+    background: lightgrey;
+    border: 1px solid darkgrey;
+    overflow: auto; }
+    .add-new-film-wrap .add-new-film .upload-file-block .box__file {
+      height: 100%;
+      opacity: 0; }
+    .add-new-film-wrap .add-new-film .upload-file-block .files-names {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      max-height: 100%; }
+  .add-new-film-wrap .add-new-film input, .add-new-film-wrap .add-new-film select, .add-new-film-wrap .add-new-film textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    outline: none;
+    font-size: 18px;
+    padding: 1px 5px; }
+  .add-new-film-wrap .add-new-film select {
+    padding: 5px 2px; }
+  .add-new-film-wrap .add-new-film .drop-file-zone {
+    padding: 20px;
+    margin-bottom: 10px;
+    border: 1px solid darkgrey;
+    background: lightgrey;
+    cursor: pointer; }
+    .add-new-film-wrap .add-new-film .drop-file-zone:hover {
+      background: darkgray; }
+  .add-new-film-wrap .add-new-film .add-film-btn, .add-new-film-wrap .add-new-film .footer .delete-film-btn, .footer .add-new-film-wrap .add-new-film .delete-film-btn {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    color: white;
+    background: limegreen;
+    border: none;
+    cursor: pointer;
+    outline: none; }
+    .add-new-film-wrap .add-new-film .add-film-btn a, .add-new-film-wrap .add-new-film .footer .delete-film-btn a, .footer .add-new-film-wrap .add-new-film .delete-film-btn a {
+      display: block;
+      padding: 20px;
+      color: white;
+      text-decoration: none; }
+    .add-new-film-wrap .add-new-film .add-film-btn:active, .add-new-film-wrap .add-new-film .footer .delete-film-btn:active, .footer .add-new-film-wrap .add-new-film .delete-film-btn:active {
+      background: #249c24; }
+
+.footer .add-film-btn, .footer .delete-film-btn {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: 20px;
+  color: white;
+  background: limegreen;
+  cursor: pointer; }
+  .footer .add-film-btn:active, .footer .delete-film-btn:active {
+    background: #249c24; }
+.footer .delete-film-btn {
+  background: red; }
+  .footer .delete-film-btn:active {
+    background: darkred; }
 
 @media (max-width: 767px) {
   .search-wrap input {

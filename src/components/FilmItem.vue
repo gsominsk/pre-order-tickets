@@ -1,7 +1,7 @@
 <template>
 	<li class="fl-item">
-		<div class="film-img-wrap" ><!-- v-bind:style="{ 'background-image': 'url(' + item.img + ')' }" -->
-			<router-link v-bind:to="'/film?film='+item.title"></router-link>
+		<div class="film-img-wrap" v-bind:style="{ 'background-image': 'url(' + item.photo[0].src + ')' }">
+			<router-link v-bind:to="'/film?film='+item.key"></router-link>
 		</div>
 	</li>
 </template>

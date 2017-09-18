@@ -47,30 +47,42 @@ html, body, .container {
       top: 6px;
       right: 5px; }
 
-.films .films-list {
-  display: flex;
-  flex-direction: row;
-  padding: 25px 0; }
-  .films .films-list .fl-item {
-    height: 250px;
-    width: 25%;
-    padding: 5px;
-    overflow: hidden; }
-    .films .films-list .fl-item .film-img-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      background-image: url("../images/empty.png");
-      background-position: 50% 50%;
-      background-repeat: no-repeat;
-      background-size: cover; }
-      .films .films-list .fl-item .film-img-wrap a {
+.admin {
+  position: absolute;
+  top: 0;
+  right: -20px;
+  font-size: 30px; }
+  .admin:hover {
+    cursor: pointer; }
+
+.films {
+  position: relative; }
+  .films .films-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 25px 0; }
+    .films .films-list .fl-item {
+      height: 250px;
+      width: 25%;
+      padding: 5px;
+      overflow: hidden; }
+      .films .films-list .fl-item .film-img-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
         height: 100%;
-        width: 100%; }
+        background-image: url("../images/empty.png");
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: cover; }
+        .films .films-list .fl-item .film-img-wrap a {
+          height: 100%;
+          width: 100%; }
 
 .film {
+  position: relative;
   max-width: 600px;
   margin: 0 auto;
   padding: 25px 0; }
@@ -292,12 +304,14 @@ html, body, .container {
   .header-menu .background-block {
     height: 94px; }
 
-  .films .films-list {
-    display: flex;
-    flex-direction: row;
-    padding: 25px 0; }
-    .films .films-list .fl-item {
-      width: 33.3%; }
+  .films {
+    position: relative; }
+    .films .films-list {
+      display: flex;
+      flex-direction: row;
+      padding: 25px 0; }
+      .films .films-list .fl-item {
+        width: 33.3%; }
 
   .film {
     padding: 15px 0; }
