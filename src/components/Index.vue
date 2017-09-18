@@ -72,7 +72,6 @@
 				}
 			},
 			changeRoot () {
-				console.log('hello');
 				localStorage.admin = localStorage.admin == 1 ? 0 : 1;
 				this.admin = this.admin == 1 ? 0 : 1;
 			}

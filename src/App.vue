@@ -55,7 +55,7 @@ export default {
 		}
 	},
 	created () {
-//		if (!localStorage.admin) localStorage.admin = 0;
+		if (!localStorage.admin) localStorage.admin = 0;
 	}
 
 

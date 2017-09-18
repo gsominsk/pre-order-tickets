@@ -128,15 +128,12 @@ export default {
 			}
 		},
 		order: function () {
-			console.log(this.clicked);
-
 			var sessions = JSON.parse(localStorage.sessions);
 
 			for (var i = 0; i < this.clicked.length; i++) {
 				sessions[this.description.key][sessions[this.description.key].length] = this.clicked[i];
 			}
 			localStorage.sessions = JSON.stringify(sessions);
-			console.log(sessions);
 		},
 		deleteFilm: function () {
 			var sessions= JSON.parse(localStorage.sessions);
@@ -144,15 +141,15 @@ export default {
 
 			delete sessions[this.description.key];
 			for (var i = 0; i < movies.length; i++) {
-				if (movies[i].key = this.description.key) {
+				if (movies[i].key == this.description.key) {
 					movies.splice(i, 1);
+					break ;
 				}
 			}
 			localStorage.sessions = JSON.stringify(sessions);
 			localStorage.films = JSON.stringify(movies);
 		},
 		changeRoot () {
-			console.log('hello');
 			localStorage.admin = localStorage.admin == 1 ? 0 : 1;
 			this.admin = this.admin == 1 ? 0 : 1;
 		}
@@ -162,12 +159,8 @@ export default {
 		var sessions= JSON.parse(localStorage.sessions);
 		var film 	= this.findGetParameter('film');
 
-		console.log(sessions);
-
-		console.log(movies);
 		if (film) {
 			for (var i = 0; i < movies.length; i++) {
-				console.log(film, movies[i].key);
 				if (movies[i].key == film.replace(' ', '+')) {
 					for (var key in movies[i]) {
 						this.description[key] = movies[i][key];

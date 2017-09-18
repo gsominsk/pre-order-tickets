@@ -87,8 +87,11 @@
 				!this.film.ticketPrice ? this.film.ticketPrice = document.addNewFilmForm.ticketPrice.value : 0;
 
 				this.film.key = window.btoa( unescape(encodeURIComponent(this.film.title + new Date)) );
-				console.log(this.film.key);
-
+				if (this.film.photo.length == 0) {
+					this.film.photo = [
+						{src:'static/empty.png'}
+					];
+				}
 				if (localStorage.films) {
 					var movies = JSON.parse(localStorage.films);
 					var sessions = JSON.parse(localStorage.sessions)
@@ -102,8 +105,6 @@
 					sessions[this.film.key] = [];
 					localStorage.sessions 	= JSON.stringify(sessions);
 				}
-
-				console.log(this.film);
 			},
 			setValue: function () {
 				console.log('eee');
